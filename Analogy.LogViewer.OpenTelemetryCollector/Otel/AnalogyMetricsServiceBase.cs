@@ -19,7 +19,7 @@ namespace Analogy.LogViewer.OpenTelemetryCollector.Otel
                 {
                     foreach (var metric in scopeMetric.Metrics)
                     {
-                        MetricReporter.Instance.RaiseNewMetric(metric);
+                        MetricReporter.Instance.RaiseNewMetric(resourceMetric, scopeMetric, metric);
                     }
                 }
             }

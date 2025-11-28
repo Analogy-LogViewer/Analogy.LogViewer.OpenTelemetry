@@ -40,7 +40,7 @@ namespace Analogy.LogViewer.OpenTelemetryCollector.IAnalogy
                     Text = e.ToString(),
                     Level = AnalogyLogLevel.Information,
                     Class = AnalogyLogClass.General,
-                    Source = e.Description,
+                    Source = e.Metric.Description,
                     User = Environment.UserName,
                     Module = "",
                     MachineName = Environment.MachineName,
