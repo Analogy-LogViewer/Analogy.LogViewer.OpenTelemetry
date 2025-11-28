@@ -58,23 +58,23 @@ jobs:
       with:
         name: artifactory_${{ matrix.configuration }}
         path: ./Analogy.LogViewer.OpenTelemetryCollector/bin/${{ matrix.configuration }}
-  # push-nuget:
-  #   name: 'Push NuGet Packages'
-  #   needs: build
-  #   if: ${{ github.event_name == 'push'}}    
-  #   runs-on: windows-latest
-  #   steps:
-  #     - name: Setup NuGet.exe for use with actions
-  #       uses: NuGet/setup-nuget@v2.0.1
-  #     - name: 'Download Artifact'
-  #       uses: actions/download-artifact@v4.1.8
-  #       with:
-  #         name: artifactory_Release
-  #     - name: 'Dotnet NuGet Push'
-  #       run: |
-  #         Get-ChildItem ./ -Filter *.nupkg |
-  #         ForEach-Object { dotnet nuget push $_ --source https://api.nuget.org/v3/index.json --skip-duplicate --api-key ${{secrets.NUGET_API_KEY}} }
-  #       shell: pwsh
+  push-nuget:
+    name: 'Push NuGet Packages'
+    needs: build
+    if: ${{ github.event_name == 'push'}}    
+    runs-on: windows-latest
+    steps:
+      - name: Setup NuGet.exe for use with actions
+        uses: NuGet/setup-nuget@v2.0.1
+      - name: 'Download Artifact'
+        uses: actions/download-artifact@v4.1.8
+        with:
+          name: artifactory_Release
+      - name: 'Dotnet NuGet Push'
+        run: |
+          Get-ChildItem ./ -Filter *.nupkg |
+          ForEach-Object { dotnet nuget push $_ --source https://api.nuget.org/v3/index.json --skip-duplicate --api-key ${{secrets.NUGET_API_KEY}} }
+        shell: pwsh
 
 concurrency: 
   group: ${{ github.ref }}

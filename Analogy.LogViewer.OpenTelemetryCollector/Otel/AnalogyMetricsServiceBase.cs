@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Analogy.LogViewer.OpenTelemetryCollector.Otel
 {
-    public class CustomMetricsServiceBase(ILogger<CustomMetricsServiceBase> logger) : MetricsService.MetricsServiceBase
+    public class AnalogyMetricsServiceBase(ILogger<AnalogyMetricsServiceBase> logger) : MetricsService.MetricsServiceBase
     {
         public override Task<ExportMetricsServiceResponse> Export(ExportMetricsServiceRequest request, ServerCallContext context)
         {
@@ -17,9 +17,9 @@ namespace Analogy.LogViewer.OpenTelemetryCollector.Otel
             {
                 foreach (var scopeMetric in resourceMetric.ScopeMetrics)
                 {
-                    foreach (var matric in scopeMetric.Metrics)
+                    foreach (var metric in scopeMetric.Metrics)
                     {
-                        Console.WriteLine($"Received matric: {matric.Name}");
+                        MetricReporter.Instance.RaiseNewMetric(metric);
                     }
                 }
             }

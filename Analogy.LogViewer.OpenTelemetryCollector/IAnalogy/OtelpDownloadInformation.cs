@@ -5,10 +5,10 @@ using System.Runtime.Versioning;
 
 namespace Analogy.LogViewer.OpenTelemetryCollector.IAnalogy
 {
-    public class ExampleDownloadInformation : Template.AnalogyDownloadInformation
+    public class OtelpDownloadInformation : Template.AnalogyDownloadInformation
     {
         public override Guid FactoryId { get; set; } = OtelpPrimaryFactory.Id;
-        public override string Name { get; set; } = "Analogy Examples";
+        public override string Name { get; set; } = "Analogy OpenTelemetry Collector";
         public override bool IsUpdateAvailable { get; set; }
         public override string? DownloadURL { get; set; }
         public override string? ChangeLogURL { get; set; }
@@ -32,6 +32,6 @@ namespace Analogy.LogViewer.OpenTelemetryCollector.IAnalogy
 
         public override string? LatestVersionNumber { get; set; }
         public override TargetFrameworkAttribute CurrentFrameworkAttribute { get; set; } = (TargetFrameworkAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(TargetFrameworkAttribute));
-        protected override string RepositoryURL { get; set; } = "https://api.github.com/repos/Analogy-LogViewer/Analogy.LogViewer.Example";
+        protected override string RepositoryURL { get; set; } = "https://api.github.com/repos/Analogy-LogViewer/Analogy.LogViewer.OpenTelemetryCollector";
     }
 }

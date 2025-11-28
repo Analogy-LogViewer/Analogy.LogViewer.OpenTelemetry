@@ -10,10 +10,10 @@ using System.Windows.Forms;
 
 namespace Analogy.LogViewer.OpenTelemetryCollector.IAnalogy
 {
-    public class ExampleUserSettingsFactory : TemplateUserSettingsFactoryWinForms
+    public class OtelpExampleUserSettings : TemplateUserSettingsFactoryWinForms
     {
         public override Guid FactoryId { get; set; } = OtelpPrimaryFactory.Id;
-        public override Guid Id { get; set; } = new Guid("d16cac0d-5dab-4afd-940f-f9fb79184115");
+        public override Guid Id { get; set; } = new Guid("ae479d49-dcf1-45e2-af98-816bdee1712e");
         public override UserControl DataProviderSettings { get; set; }
         public override string Title { get; set; } = "Otel User Settings";
         public override Image? SmallImage { get; set; } = Resources.Analogy_image_16x16;
@@ -22,7 +22,7 @@ namespace Analogy.LogViewer.OpenTelemetryCollector.IAnalogy
 
         public override void CreateUserControl(ILogger logger)
         {
-            DataProviderSettings = new UserControl();
+            DataProviderSettings = new OtelpUserSettingsUC();
         }
 
         public override Task SaveSettingsAsync()

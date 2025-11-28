@@ -2,7 +2,7 @@
 
 namespace Analogy.LogViewer.OpenTelemetryCollector.IAnalogy
 {
-    public class ExampleAnalogyImages : AnalogyImages
+    public class AnalogyImages : Template.WinForms.AnalogyImages
     {
     }
 }

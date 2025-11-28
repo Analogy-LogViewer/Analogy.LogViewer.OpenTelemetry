@@ -20,7 +20,6 @@ namespace Analogy.LogViewer.OpenTelemetryCollector.Otel
         public Startup(IConfiguration configuration) => Configuration = configuration;
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddSingleton<GRPCLogConsumer>();
             services.AddGrpc();
         }
 
@@ -37,12 +36,11 @@ namespace Analogy.LogViewer.OpenTelemetryCollector.Otel
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.UseSerilogRequestLogging();
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGrpcService<CustomMetricsServiceBase>();
+                endpoints.MapGrpcService<AnalogyMetricsServiceBase>();
                 endpoints.MapGet("/", async context =>
                 {
                     await context.Response.WriteAsync("Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
