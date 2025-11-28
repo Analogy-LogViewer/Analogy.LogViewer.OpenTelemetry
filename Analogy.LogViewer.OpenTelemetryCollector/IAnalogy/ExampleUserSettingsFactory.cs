@@ -13,13 +13,12 @@ namespace Analogy.LogViewer.OpenTelemetryCollector.IAnalogy
     public class ExampleUserSettingsFactory : TemplateUserSettingsFactoryWinForms
     {
         public override Guid FactoryId { get; set; } = OtelpPrimaryFactory.Id;
-        public override Guid Id { get; set; } = new Guid("fe9d38dc-dd31-4f15-8aee-acb7f7e9085b");
+        public override Guid Id { get; set; } = new Guid("d16cac0d-5dab-4afd-940f-f9fb79184115");
         public override UserControl DataProviderSettings { get; set; }
-        public override string Title { get; set; } = "Example User Settings";
+        public override string Title { get; set; } = "Otel User Settings";
         public override Image? SmallImage { get; set; } = Resources.Analogy_image_16x16;
         public override Image? LargeImage { get; set; } = Resources.Analogy_image_32x32;
-        public override AnalogyToolTip ToolTip { get; set; } = new AnalogyToolTipWithImages("Example tooltip", "some content",
-            "footer/title", Resources.Analogy_image_16x16, Resources.Analogy_image_32x32);
+        public override AnalogyToolTip ToolTip { get; set; } = new AnalogyToolTipWithImages("Otel user settings", "", "", Resources.Analogy_image_16x16, Resources.Analogy_image_32x32);
 
         public override void CreateUserControl(ILogger logger)
         {

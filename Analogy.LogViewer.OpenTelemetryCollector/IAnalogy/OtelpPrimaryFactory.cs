@@ -10,7 +10,7 @@ namespace Analogy.LogViewer.OpenTelemetryCollector.IAnalogy
 {
     public class OtelpPrimaryFactory : PrimaryFactoryWinForms
     {
-        internal static readonly Guid Id = new Guid("1F3CF785-D4E0-4F1D-BEEB-0457EB25A43E");
+        internal static readonly Guid Id = new Guid("8a1c829a-54e9-408f-a7f7-f94e526876a9");
         public override Guid FactoryId { get; set; } = Id;
 
         public override string Title { get; set; } = "Otel Collector";
