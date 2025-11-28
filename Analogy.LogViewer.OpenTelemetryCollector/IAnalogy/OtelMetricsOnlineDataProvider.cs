@@ -1,4 +1,5 @@
 ﻿using Analogy.Interfaces.DataTypes;
+using Analogy.LogViewer.OpenTelemetryCollector.Properties;
 using Analogy.LogViewer.Template.WinForms;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,15 +13,19 @@ using Timer = System.Timers.Timer;
 
 namespace Analogy.LogViewer.OpenTelemetryCollector.IAnalogy
 {
-    public sealed class MetricsOnlineDataProvider : OnlineDataProviderWinForms
+    public sealed class OtelMetricsOnlineDataProvider : OnlineDataProviderWinForms
     {
         public override string? OptionalTitle { get; set; }
         public override Guid Id { get; set; } = new Guid("aa448f92-07e1-4664-a597-25398877294a");
+        public override Image? ConnectedLargeImage { get; set; } = Resources.Analogy_otel_icon32x32;
+        public override Image? ConnectedSmallImage { get; set; } = Resources.Analogy_otel_icon16x16;
+        public override Image? DisconnectedLargeImage { get; set; } = Resources.Analogy_otel_icon32x32;
+        public override Image? DisconnectedSmallImage { get; set; } = Resources.Analogy_otel_icon16x16;
 
         public override Task<bool> CanStartReceiving() => Task.FromResult(true);
-        public MetricsOnlineDataProvider()
+        public OtelMetricsOnlineDataProvider()
         {
-            OptionalTitle = "Metrics Data";
+            OptionalTitle = "Metrics";
         }
 
         public override async Task InitializeDataProvider(ILogger logger)

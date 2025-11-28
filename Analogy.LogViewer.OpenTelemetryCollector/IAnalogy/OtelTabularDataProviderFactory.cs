@@ -7,12 +7,12 @@ namespace Analogy.LogViewer.OpenTelemetryCollector.IAnalogy
 {
     public class OtelTabularDataProviderFactory : DataProvidersFactoryWinForms
     {
-        public override Guid FactoryId { get; set; } = OtelpPrimaryFactory.Id;
+        public override Guid FactoryId { get; set; } = OtelPrimaryFactory.Id;
         public override string Title { get; set; } = "Analogy Otel tabular Data";
 
         public override IEnumerable<IAnalogyDataProvider> DataProviders { get; set; } = new List<IAnalogyDataProvider>
         {
-            new MetricsOnlineDataProvider(),
+            new OtelMetricsOnlineDataProvider(),
         };
     }
 }

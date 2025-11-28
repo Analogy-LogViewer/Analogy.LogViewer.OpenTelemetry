@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Analogy.LogViewer.OpenTelemetryCollector.IAnalogy
 {
-    public class OtelpMetricsUserControlFactory : IAnalogyCustomUserControlsFactoryWinForms
+    public class OtelMetricsUserControlFactory : IAnalogyCustomUserControlsFactoryWinForms
     {
-        public Guid FactoryId { get; set; } = OtelpPrimaryFactory.Id;
+        public Guid FactoryId { get; set; } = OtelPrimaryFactory.Id;
         public string Title { get; set; } = "Metrics Viewer";
 
         public IEnumerable<IAnalogyCustomUserControlWinForms> UserControls { get; } = new List<IAnalogyCustomUserControlWinForms>

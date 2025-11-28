@@ -9,6 +9,9 @@
 //------------------------------------------------------------------------------
 
 namespace Analogy.LogViewer.OpenTelemetryCollector.Properties {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -16,7 +19,7 @@ namespace Analogy.LogViewer.OpenTelemetryCollector.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -73,6 +76,26 @@ namespace Analogy.LogViewer.OpenTelemetryCollector.Properties {
         public static System.Drawing.Bitmap Analogy_image_32x32 {
             get {
                 object obj = ResourceManager.GetObject("Analogy_image_32x32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Analogy_otel_icon16x16 {
+            get {
+                object obj = ResourceManager.GetObject("Analogy_otel_icon16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Analogy_otel_icon32x32 {
+            get {
+                object obj = ResourceManager.GetObject("Analogy_otel_icon32x32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

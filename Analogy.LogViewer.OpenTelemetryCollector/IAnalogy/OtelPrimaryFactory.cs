@@ -8,14 +8,14 @@ using System.Drawing;
 
 namespace Analogy.LogViewer.OpenTelemetryCollector.IAnalogy
 {
-    public class OtelpPrimaryFactory : PrimaryFactoryWinForms
+    public class OtelPrimaryFactory : PrimaryFactoryWinForms
     {
         internal static readonly Guid Id = new Guid("8a1c829a-54e9-408f-a7f7-f94e526876a9");
         public override Guid FactoryId { get; set; } = Id;
 
-        public override string Title { get; set; } = "Otel Collector";
-        public override Image? SmallImage { get; set; } = Resources.Analogy_image_16x16;
-        public override Image? LargeImage { get; set; } = Resources.Analogy_image_32x32;
+        public override string Title { get; set; } = "Open Telemetry";
+        public override Image? SmallImage { get; set; } = Resources.Analogy_otel_icon16x16;
+        public override Image? LargeImage { get; set; } = Resources.Analogy_otel_icon32x32;
 
         public override IEnumerable<IAnalogyChangeLog> ChangeLog { get; set; } = new List<AnalogyChangeLog>
         {

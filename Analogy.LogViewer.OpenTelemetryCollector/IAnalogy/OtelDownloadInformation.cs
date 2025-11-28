@@ -5,9 +5,9 @@ using System.Runtime.Versioning;
 
 namespace Analogy.LogViewer.OpenTelemetryCollector.IAnalogy
 {
-    public class OtelpDownloadInformation : Template.AnalogyDownloadInformation
+    public class OtelDownloadInformation : Template.AnalogyDownloadInformation
     {
-        public override Guid FactoryId { get; set; } = OtelpPrimaryFactory.Id;
+        public override Guid FactoryId { get; set; } = OtelPrimaryFactory.Id;
         public override string Name { get; set; } = "Analogy OpenTelemetry Collector";
         public override bool IsUpdateAvailable { get; set; }
         public override string? DownloadURL { get; set; }
