@@ -1,8 +1,10 @@
 ﻿using Analogy.Interfaces;
 using Analogy.Interfaces.DataTypes;
+using Analogy.LogViewer.OpenTelemetry.Managers;
 using Analogy.LogViewer.Template.Managers;
 using Microsoft.Extensions.Logging;
 #if NET
+using Analogy.LogViewer.OpenTelemetry.Types;
 using OpenTelemetry.Proto.Metrics.V1;
 #endif
 using System;
@@ -27,70 +29,60 @@ namespace Analogy.LogViewer.OpenTelemetry.IAnalogy
             LogManager.Instance.SetLogger(logger);
             Interactor = onDemandPlottingInteractor;
 #if NET
-            Otel.MetricReporter.Instance.NewMetric += (s, e) =>
-            {
+            Otel.MetricReporter.Instance.NewMetric += Instance_NewMetric;
+#endif
+            return Task.CompletedTask;
+        }
+#if NET
+        private void Instance_NewMetric(object? sender, (ResourceMetrics ResourceMetric, ScopeMetrics ScopeMetric, Metric Metric) e)
+        {
                 if (!enable)
                 {
                     return;
                 }
-                var key = Types.Utils.GetServiceNameFromMetricResource(e.ResourceMetric);
-                if (source.Equals(key) && e.Metric.Name.Equals(MetricName))
+
+                var serviceName = Types.Utils.GetServiceNameFromMetricResource(e.ResourceMetric);
+                if (source.Equals(serviceName) && e.Metric.Name.Equals(MetricName))
                 {
-                    switch (e.Metric.DataCase)
-                    {
-                        case Metric.DataOneofCase.None:
-                            break;
-                        case Metric.DataOneofCase.Gauge:
-                            var list = new List<AnalogyPlottingPointData>();
-
-                            foreach (var val in e.Metric.Gauge.DataPoints)
-                            {
-                                if (val.HasAsDouble)
-                                {
-                                    var unixTimeMilliseconds = val.TimeUnixNano / 1_000_000;
-                                    var time = DateTimeOffset.FromUnixTimeMilliseconds((long)unixTimeMilliseconds);
-                                    AnalogyPlottingPointData d = new AnalogyPlottingPointData(MetricName, val.AsDouble, time);
-                                    list.Add(d);
-                                }
-                            }
-
-                            if (list.Any())
-                            {
-                                if (UI.InvokeRequired)
-                                {
-                                    UI.Invoke(new MethodInvoker(() =>
-                                    {
-                                        OnNewPointsData?.Invoke(this, (Id, list));
-                                    }));
-                                }
-                                else
-                                {
-                                    OnNewPointsData?.Invoke(this, (Id, list));
-                                }
-                            }
-
-                            break;
-                        case Metric.DataOneofCase.Sum:
-                            break;
-                        case Metric.DataOneofCase.Histogram:
-                            break;
-                        case Metric.DataOneofCase.ExponentialHistogram:
-                            break;
-                        case Metric.DataOneofCase.Summary:
-                            break;
-                        default:
-                            break;
-                    }
+                    ProcessData(e.Metric);
                 }
-            };
-#endif
-            return Task.CompletedTask;
         }
-
+#endif
+#if NET
+        private void ProcessData(Metric metric)
+        {
+            var data = Utils.GetMetricData(metric).ToList();
+            if (data.Any())
+            {
+                if (UI.InvokeRequired)
+                {
+                    UI.Invoke(new MethodInvoker(() =>
+                    {
+                        OnNewPointsData?.Invoke(this, (Id, data));
+                    }));
+                }
+                else
+                {
+                    OnNewPointsData?.Invoke(this, (Id, data));
+                }
+            }
+        }
+#endif
         public void StartPlotting(UserControl ui)
         {
             UI = ui;
-            enable = true;
+#if NET
+            _ = Task.Run(async () =>
+            {
+                await Task.Delay(100);
+                var history = MetricsManager.Instance.GetHistory(Source, MetricName).ToList();
+                foreach (Metric metric in history)
+                {
+                    ProcessData(metric);
+                }
+                enable = true;
+            });
+#endif
         }
 
         public void StopPlotting() => enable = false;
@@ -102,7 +94,7 @@ namespace Analogy.LogViewer.OpenTelemetry.IAnalogy
 
         public void ClosePlot()
         {
-            Interactor.ClosePlot(Id);
+            HidePlot();
         }
 
         public void RemoveSeriesFromPlot(string seriesName)
@@ -122,6 +114,9 @@ namespace Analogy.LogViewer.OpenTelemetry.IAnalogy
 
         public void HidePlot()
         {
+#if NET
+            Otel.MetricReporter.Instance.NewMetric -= Instance_NewMetric;
+#endif
             Interactor.ClosePlot(Id);
         }
     }

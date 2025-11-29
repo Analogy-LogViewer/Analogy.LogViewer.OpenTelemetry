@@ -11,13 +11,13 @@ namespace Analogy.LogViewer.OpenTelemetry
 
         public static OnDemandPlottingContainer Instance => _instance.Value;
 
-        private ExampleOnDemandPlottingFactory AnalogyFactory { get; set; }
+        private OtelMetricOnDemandPlottingFactory AnalogyFactory { get; set; }
 
         public OnDemandPlottingContainer()
         {
         }
 
-        public void SetFactory(ExampleOnDemandPlottingFactory analogyFactory)
+        public void SetFactory(OtelMetricOnDemandPlottingFactory analogyFactory)
         {
             AnalogyFactory = analogyFactory;
         }

@@ -5,41 +5,43 @@ using System.Windows.Forms;
 
 namespace Analogy.LogViewer.OpenTelemetry.IAnalogy
 {
-    public partial class ExampleUserControlUC : UserControl
+    public partial class OtelMetricsViewerUC : UserControl
     {
-        private OtelMetricOnDemandPlotting p;
-
-        public ExampleUserControlUC()
+        private OtelMetricOnDemandPlotting? p;
+#if NET
+        private Types.MetricRecords? MetricRecords { get; set; }
+#endif
+        private string MetricName { get; set; }
+        public OtelMetricsViewerUC()
         {
             InitializeComponent();
         }
 
         private void btnGenerator_Click(object sender, EventArgs e)
         {
-            //p = new OtelMetricOnDemandPlotting();
-            //OnDemandPlottingContainer.Instance.AddOnDemandPlotting(p);
-        }
-
-        private void btnGneratorShow_Click(object sender, EventArgs e)
-        {
+            if (p is not null)
+            {
+                p.HidePlot();
+                p.StopPlotting();
+            }
+#if NET
+            p = new OtelMetricOnDemandPlotting(MetricRecords.ServiceName, MetricName, Guid.NewGuid());
+            OnDemandPlottingContainer.Instance.AddOnDemandPlotting(p);
+            p.ShowPlot();
             p.StartPlotting(this);
+#endif
         }
 
         private void btnGeneratorHide_Click(object sender, EventArgs e)
         {
+            if (p is null)
+            {
+                return;
+            }
             p.HidePlot();
-        }
-
-        private void btnStopPlotting_Click(object sender, EventArgs e)
-        {
             p.StopPlotting();
+            p = null;
         }
-
-        private void btnShowPlot_Click(object sender, EventArgs e)
-        {
-            p.ShowPlot();
-        }
-
         private void BtnRefresh_Click(object sender, EventArgs e)
         {
             treeViewMetrics.Nodes.Clear();
@@ -64,8 +66,10 @@ namespace Analogy.LogViewer.OpenTelemetry.IAnalogy
 #if NET
             if (e.Node?.Tag is Types.MetricRecords metric)
             {
-                p = new OtelMetricOnDemandPlotting(metric.Key, e.Node.Text, Guid.NewGuid());
-                OnDemandPlottingContainer.Instance.AddOnDemandPlotting(p);
+                MetricName = e.Node.Text;
+                MetricRecords = metric;
+                lblSelection.Text = $"{metric.ServiceName}: {e.Node.Text}";
+                btnGenerator.Enabled = true;
             }
 #endif
         }

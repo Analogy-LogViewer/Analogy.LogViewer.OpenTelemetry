@@ -36,7 +36,7 @@ namespace Analogy.LogViewer.OpenTelemetry.IAnalogy
             return Task.CompletedTask;
         }
 
-        public UserControl UserControl => new ExampleUserControlUC();
+        public UserControl UserControl => new OtelMetricsViewerUC();
         public Guid Id { get; set; } = new Guid("afa58e94-db5b-461e-982c-a3802e291b37");
         public Image? SmallImage { get; set; }
         public Image? LargeImage { get; set; }
